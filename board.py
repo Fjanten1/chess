@@ -56,3 +56,25 @@ class Board:
                 piece = self.squares[square]
                 row_pieces.append(str(piece) if piece else "None")
             print(row_pieces)
+
+    def find_piece(self, symbol: str, identifier: int, color: str):
+        """Find a piece on the board by its symbol, identifier, and color."""
+        return [
+            piece for piece in self.squares.values()
+            if piece and piece.symbol == symbol and piece.identifier == identifier and piece.color == color
+        ]
+
+    def get_piece(self, square: str):
+        """Return the piece on a specific square."""
+        return self.squares[square]
+
+    def is_square_empty(self, square: str):
+        """Return True if the square is empty, False otherwise."""
+        return self.get_piece(square) is None
+
+    def kill_piece(self, square: str):
+        """Kill the piece on a specific square."""
+        piece = self.get_piece(square)
+        if piece:
+            piece.die()
+            self.squares[square] = None
