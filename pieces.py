@@ -21,7 +21,7 @@ class BaseChessPiece(ABC):
 
     @abstractmethod
     def move(self, movement: str):
-        pass
+        print(movement)
 
     def die(self):
         self.is_alive = False
@@ -37,7 +37,6 @@ class Pawn(BaseChessPiece):
     def move(self):
         movement = "Pawn moves forward 1 position"
         super().move(movement)
-        print(movement)
 
 class Rook(BaseChessPiece):
     def move(self):
