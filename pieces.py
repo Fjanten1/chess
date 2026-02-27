@@ -51,6 +51,7 @@ class BaseChessPiece(ABC):
 class Pawn(BaseChessPiece):
     @print_board
     def move(self, direction=None, squares=1):
+        # Pawns can only move forward, ignore direction parameter
         movement = BoardMovement.forward(self.position, self.color, squares)
         if self.board:
             self.board.squares[self.position] = None
@@ -98,27 +99,29 @@ class Bishop(BaseChessPiece):
 class Knight(BaseChessPiece):
     @print_board
     def move(self, direction, squares=1):
+        # Knight moves in L-shape: 2 squares in one direction and 1 square perpendicular
         column = self.position[0]
         row = int(self.position[1])
+        new_row, new_column = row, column
 
-        if direction == 'forward_left':
-            new_row = row + (1 if self.color == 'WHITE' else -1) * 2
-            new_column = chr(ord(column) - 1)
-        elif direction == 'forward_right':
-            new_row = row + (1 if self.color == 'WHITE' else -1) * 2
-            new_column = chr(ord(column) + 1)
-        elif direction == 'left_forward':
-            new_row = row + (1 if self.color == 'WHITE' else -1) * 1
-            new_column = chr(ord(column) - 2)
-        elif direction == 'left_backward':
-            new_row = row + (-1 if self.color == 'WHITE' else 1) * 1
-            new_column = chr(ord(column) - 2)
-        elif direction == 'right_forward':
-            new_row = row + (1 if self.color == 'WHITE' else -1) * 1
-            new_column = chr(ord(column) + 2)
-        elif direction == 'right_backward':
-            new_row = row + (-1 if self.color == 'WHITE' else 1) * 1
-            new_column = chr(ord(column) + 2)
+        # Define knight movement patterns
+        move_patterns = {
+            'forward_left': (2, -1),
+            'forward_right': (2, 1),
+            'left_forward': (1, -2),
+            'left_backward': (-1, -2),
+            'right_forward': (1, 2),
+            'right_backward': (-1, 2)
+        }
+
+        if direction in move_patterns:
+            row_change, col_change = move_patterns[direction]
+            # Adjust row change based on color (white moves up, black moves down)
+            if self.color == 'WHITE':
+                new_row = row + row_change
+            else:
+                new_row = row - row_change
+            new_column = chr(ord(column) + col_change)
         else:
             return
 
