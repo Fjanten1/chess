@@ -1,5 +1,6 @@
 # chess/board.py
 from pieces import Rook, Knight, Bishop, Queen, King, Pawn
+import json
 
 class Board:
     def __init__(self):
@@ -83,3 +84,12 @@ class Board:
         if piece:
             piece.die()
             self.squares[square] = None
+
+    def save_board_state(self, filename='board_states.txt'):
+        """Save the current state of the board to a file."""
+        board_state = {
+            square: piece.to_dict() if piece else None
+            for square, piece in self.squares.items()
+        }
+        with open(filename, 'a') as file:
+            file.write(json.dumps(board_state) + '\n')

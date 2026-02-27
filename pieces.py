@@ -2,6 +2,7 @@
 from abc import ABC, abstractmethod
 from movement import BoardMovement
 import functools
+import json
 
 def print_board(func):
     @functools.wraps(func)
@@ -9,6 +10,7 @@ def print_board(func):
         func(self, *args, **kwargs)
         if self.board:
             self.board.print_board()
+            self.board.save_board_state()
     return wrapper
 
 class BaseChessPiece(ABC):
@@ -41,6 +43,17 @@ class BaseChessPiece(ABC):
 
     def define_board(self, board):
         self.board = board
+
+    def to_dict(self):
+        """Convert the piece to a dictionary for serialization."""
+        return {
+            'color': self.color,
+            'identifier': self.identifier,
+            'is_alive': self.is_alive,
+            'position': self.position,
+            'name': self.name,
+            'symbol': self.symbol
+        }
 
     def __str__(self):
         return f"{self.color} {self.name} {self.identifier}"
