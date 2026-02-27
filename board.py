@@ -93,3 +93,11 @@ class Board:
         }
         with open(filename, 'a') as file:
             file.write(json.dumps(board_state) + '\n')
+    
+    # chess/board.py
+    @staticmethod
+    def load_board_states(filename='board_states.txt'):
+        """Load board states from a file using a generator."""
+        with open(filename, 'r') as file:
+            for line in file:
+                yield json.loads(line)
