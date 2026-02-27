@@ -39,3 +39,27 @@ class Pawn(BaseChessPiece):
         super().move(movement)
         print(movement)
 
+class Rook(BaseChessPiece):
+    def move(self):
+        movement = "Rook moves in a straight line"
+        super().move(movement)
+
+class Bishop(BaseChessPiece):
+    def move(self):
+        movement = "Bishop moves diagonally"
+        super().move(movement)
+
+class Knight(BaseChessPiece):
+    def move(self):
+        movement = "Knight moves in an L shape"
+        super().move(movement)
+
+class King(BaseChessPiece):
+    def move(self):
+        movement = "King moves one position in any direction"
+        super().move(movement)
+
+class Queen(BaseChessPiece):
+    def move(self):
+        movement = "Queen moves in any direction"
+        super().move(movement)
