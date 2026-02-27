@@ -3,7 +3,6 @@ from pieces import Rook, Knight, Bishop, Queen, King, Pawn
 
 class Board:
     def __init__(self):
-        # Initialize the board as a dictionary with keys as square names and values as None
         self.squares = {
             f"{chr(col)}{row}": None
             for col in range(ord('a'), ord('i'))
@@ -46,6 +45,12 @@ class Board:
             for col in range(ord('a'), ord('i'))
         }
         self.squares.update(white_pawns)
+
+        # Set initial positions and boards
+        for square, piece in self.squares.items():
+            if piece:
+                piece.set_initial_position(square)
+                piece.define_board(self)
 
     def print_board(self):
         """Print the board in a row-first way."""
